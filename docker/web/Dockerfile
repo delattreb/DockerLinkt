@@ -49,9 +49,8 @@ COPY default.conf /etc/nginx/sites-available/default
 # Expose port
 EXPOSE 80 443
 
-#ENTRYPOINT ["service","php7.2-fpm","start"]
-
 # Define default command.
+
 CMD ["nginx","-g","daemon off;"]
 
 

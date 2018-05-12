@@ -23,7 +23,6 @@ services:
       - "8080:80"
       - "8083:443"
       - "${SOCKET}:${SOCKET}"
-      - "8000:8000"
     networks:
       linkt_net:
         ipv4_address: ${IP_NGINX}
@@ -47,9 +46,9 @@ services:
     volumes:
       - ../data/redis:/data
 
-  db:
-    container_name: db
-    hostname : db
+  mariadb:
+    container_name: mariadb
+    hostname : mariadb
     image: mariadb:latest
     networks:
       linkt_net:
@@ -75,7 +74,7 @@ services:
     volumes:
       - "/sessions"
     links:
-      - "db:db"
+      - "mariadb:db"
 
   sails_dev:
     container_name: sails
@@ -94,10 +93,35 @@ services:
       - NODE_ENV=dev
     command: "sails lift"
 
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgres:10.1
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_POSTGRES}
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+
+  sonarqube:
+    container_name: sonarqube
+    hostname: sonarqube
+    image: sonarqube:6.7.1
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_SONARQUBE}    
+    ports:
+      - "7000:9000"
+      - "5432:5432"
+    links:
+      - postgres:db
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
 networks:
-  linkt_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: ${IP_NETWORK}
+    linkt_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: ${IP_NETWORK}
 
