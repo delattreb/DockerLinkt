@@ -1,0 +1,103 @@
+version: '3'
+volumes:
+  portainer_data:
+
+services:
+  portainer:
+    container_name: portainer
+    hostname: portainer
+    image: portainer/portainer
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_PORTAINER}
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    ports:
+      - "8080:80"
+      - "8083:443"
+      - "${SOCKET}:${SOCKET}"
+      - "8000:8000"
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_NGINX}
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+      args:
+        - MYUSER=${MYUSER}
+    volumes:
+      - ${HOME_USER}:/var/www
+
+  redis:
+    container_name: redis
+    hostname : redis
+    image: redis
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_REDIS}
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../data/redis:/data
+
+  db:
+    container_name: db
+    hostname : db
+    image: mariadb:latest
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_DB}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    hostname : phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_PHP_MYADMIN}
+    environment:
+      MYSQL_USERNAME: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
+    restart: always
+    ports:
+      - "9090:80"
+    volumes:
+      - "/sessions"
+    links:
+      - "db:db"
+
+  sails_dev:
+    container_name: sails
+    hostname: sails
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
+      args:
+        - SAILS_VERSION=${SAILS_VERSION}
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_SAILS}
+    ports:
+      - "1337:1337"
+    environment:
+      - NODE_ENV=dev
+    command: "sails lift"
+
+networks:
+  linkt_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${IP_NETWORK}
+
