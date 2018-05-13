@@ -40,7 +40,7 @@ services:
       args:
         - MYUSER=${MYUSER}
     volumes:
-      - ${HOME_USER}:/var/www
+      - /home/${MYUSER}/site:/var/www
       - ../${VOLUME}/nginx:/var/log/nginx
 
   redis:
