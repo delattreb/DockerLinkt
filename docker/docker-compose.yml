@@ -1,6 +1,14 @@
 version: '3'
+
 volumes:
   portainer_data:
+
+networks:
+  linkt_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${IP_NETWORK}
 
 services:
   portainer:
@@ -107,7 +115,7 @@ services:
   sonarqube:
     container_name: sonarqube
     hostname: sonarqube
-    image: sonarqube:6.7.1
+    image: sonarqube:6.7.2
     networks:
       linkt_net:
         ipv4_address: ${IP_SONARQUBE}    
@@ -118,10 +126,3 @@ services:
       - postgres:db
     environment:
       - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
-networks:
-    linkt_net:
-        ipam:
-            driver: default
-            config:
-                - subnet: ${IP_NETWORK}
-
