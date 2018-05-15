@@ -14,8 +14,8 @@ RUN wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-sc
 RUN unzip /opt/sonarqube/bin/sonar-scanner-cli-3.1.0.1141-linux.zip -d /opt/sonarqube/bin
 RUN rm /opt/sonarqube/bin/sonar-scanner-cli-3.1.0.1141-linux.zip
 
-COPY sonar-scanner.properties /opt/sonarqube/conf
-COPY sonar-project.properties /opt/sonarqube
+COPY sonar/sonar-scanner.properties /opt/sonarqube/conf
+COPY sonar/sonar-project.properties /opt/sonarqube
 
 
 
