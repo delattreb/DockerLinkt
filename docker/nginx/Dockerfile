@@ -26,8 +26,8 @@ RUn apt-get -y install curl
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y install nodejs
 
-# Install PHP7.2
-RUN apt-get -y install phpunit php7.2 php7.2-cli php7.2-fpm php7.2-curl php7.2-gd php7.2-mysql php7.2-mbstring php7.2-ldap php7.2-xml zip unzip
+# Install PHP FROM ${PHPVERSION}
+RUN apt-get -y install phpunit php${PHPVERSION} php${PHPVERSION}-cli php${PHPVERSION}-fpm php${PHPVERSION}-curl php${PHPVERSION}-gd php${PHPVERSION}-mysql php${PHPVERSION}-mbstring php${PHPVERSION}-ldap php${PHPVERSION}-xml zip unzip
 
 # Install nginx
 RUN apt-get -y install nginx
