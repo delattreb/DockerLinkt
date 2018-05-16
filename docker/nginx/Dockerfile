@@ -1,6 +1,7 @@
-ARG MYUSER=${MYUSER}
-
 FROM ubuntu:16.04
+
+# Get user arg
+ARG MYUSER=${MYUSER}
 
 # Install packages
 RUN apt-get -y update
@@ -35,7 +36,6 @@ RUN apt-get -y install nginx
 RUN apt-get -y install nano
 
 # Add user
-ARG MYUSER=${MYUSER}
 RUN useradd -G www-data ${MYUSER}
 #$USERV
 
