@@ -1,5 +1,5 @@
 ARG NODE_VERSION=${NODE_VERSION}
-FROM node:8.11.0
+FROM node:${NODE_VERSION}
 
 RUN apt-get -y update
 RUN apt-get -y install git
