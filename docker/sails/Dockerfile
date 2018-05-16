@@ -1,3 +1,4 @@
+ARG NODE_VERSION=${NODE_VERSION}
 FROM node:8.11.0
 
 RUN apt-get -y update
