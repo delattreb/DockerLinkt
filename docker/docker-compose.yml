@@ -102,6 +102,8 @@ services:
       - "1337:1337"
     environment:
       - NODE_ENV=dev
+    volumes:
+      - /home/${MYUSER}/sails:/server
     command: "sails lift"
 
   postgres:
