@@ -11,6 +11,6 @@ RUN mkdir /server
 VOLUME ["/server"]
 WORKDIR /server
 EXPOSE 1337
-CMD ["npm", "start"]
+CMD ["tail","-f","/var/log/wtmp"]
 
 
