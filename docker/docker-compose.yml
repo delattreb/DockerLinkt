@@ -105,7 +105,6 @@ services:
       - NODE_ENV=dev
     volumes:
       - /home/${MYUSER}/sails:/server
-    command: "sails lift"
 
   postgres:
     container_name: postgres
