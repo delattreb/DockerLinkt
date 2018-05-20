@@ -20,6 +20,8 @@ services:
     build:
       context: .
       dockerfile: ./swagger/Dockerfile
+      args:
+        - URLJSON=${URLJSON}
     ports:
       - "5000:8080"
 
