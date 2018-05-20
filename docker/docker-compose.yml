@@ -11,6 +11,18 @@ networks:
         - subnet: ${IP_NETWORK}
 
 services:
+  swagger_ui:
+    container_name: swagger_ui
+    hostname: swagger_ui
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_SWAGGERUI}
+    build:
+      context: .
+      dockerfile: ./swagger/Dockerfile
+    ports:
+      - "5000:8080"
+
   portainer:
     container_name: portainer
     hostname: portainer
