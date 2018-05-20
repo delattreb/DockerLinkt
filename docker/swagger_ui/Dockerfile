@@ -22,11 +22,11 @@ ENV BASE_URL ""
 RUN apk add --update nginx
 RUN mkdir -p /run/nginx
 
-COPY swagger/nginx.conf /etc/nginx/
+COPY swagger_ui/nginx.conf /etc/nginx/
 
 # copy swagger files to the `/js` folder
-ADD swagger/dist/* /usr/share/nginx/html/
-ADD swagger/docker-run.sh /usr/share/nginx/
+ADD swagger_ui/dist/* /usr/share/nginx/html/
+ADD swagger_ui/docker-run.sh /usr/share/nginx/
 
 EXPOSE 8080
 
