@@ -11,6 +11,10 @@ networks:
         - subnet: ${IP_NETWORK}
 
 services:
+#  dockerlinkt:
+#    build: .
+#    image: delattreb/dockerlinkt  
+
   swagger_editor:
     container_name: swagger_editor
     hostname: swagger_editor
