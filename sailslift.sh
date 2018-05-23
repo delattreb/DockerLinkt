@@ -1,3 +1,7 @@
 #!/bin/bash
-docker exec -it sails sails lift
-
+if [ -z "$1" ]
+  then
+    echo "Argument: Nom du container"
+else
+  docker exec -it $1 sails lift
+fi
