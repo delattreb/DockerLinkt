@@ -5,6 +5,5 @@ docker-compose up -d
 cd ..
 echo "Start PHP"
 ./php.sh
-docker stop sonarqube
 
 

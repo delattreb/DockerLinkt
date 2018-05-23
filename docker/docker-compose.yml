@@ -16,8 +16,8 @@ services:
 #    image: delattreb/dockerlinkt  
 
   swagger_editor:
-    container_name: swagger_editor
-    hostname: swagger_editor
+    container_name: ${PREFIX}swagger_editor${SUFFIX}
+    hostname: ${PREFIX}swagger_editor${SUFFIX}
     networks:
       linkt_net:
         ipv4_address: ${IP_SWAGGEREDITOR}
@@ -28,8 +28,8 @@ services:
       - "5001:8080"
 
   swagger_ui:
-    container_name: swagger_ui
-    hostname: swagger_ui
+    container_name: ${PREFIX}swagger_ui${SUFFIX}
+    hostname: ${PREFIX}swagger_ui${SUFFIX}
     networks:
       linkt_net:
         ipv4_address: ${IP_SWAGGERUI}
@@ -42,8 +42,8 @@ services:
       - "5000:8080"
 
   portainer:
-    container_name: portainer
-    hostname: portainer
+    container_name: ${PREFIX}portainer${SUFFIX}
+    hostname: ${PREFIX}portainer${SUFFIX}
     image: portainer/portainer
     networks:
       linkt_net:
@@ -55,8 +55,8 @@ services:
       - portainer_data:/data
 
   nginx:
-    container_name: nginx
-    hostname: nginx
+    container_name: ${PREFIX}nginx${SUFFIX}
+    hostname: ${PREFIX}nginx${SUFFIX}
     ports:
       - "8080:80"
       - "8083:443"
@@ -74,8 +74,8 @@ services:
       - ../${VOLUME}/nginx:/var/log/nginx
 
   redis:
-    container_name: redis
-    hostname : redis
+    container_name: ${PREFIX}redis${SUFFIX}
+    hostname : ${PREFIX}redis${SUFFIX}
     image: redis
     networks:
       linkt_net:
@@ -86,8 +86,8 @@ services:
       - ../${VOLUME}/redis:/data
 
   mariadb:
-    container_name: mariadb
-    hostname : mariadb
+    container_name: ${PREFIX}mariadb${SUFFIX}
+    hostname : ${PREFIX}mariadb${SUFFIX}
     image: mariadb:latest
     networks:
       linkt_net:
@@ -100,8 +100,8 @@ services:
       - ../${VOLUME}/mariadb:/var/lib/mysql
 
   phpmyadmin:
-    container_name: phpmyadmin
-    hostname : phpmyadmin
+    container_name: ${PREFIX}phpmyadmin${SUFFIX}
+    hostname : ${PREFIX}phpmyadmin${SUFFIX}
     image: phpmyadmin/phpmyadmin
     networks:
       linkt_net:
@@ -118,8 +118,8 @@ services:
       - "mariadb:db"
 
   sails_dev:
-    container_name: sails
-    hostname: sails
+    container_name: ${PREFIX}sails${SUFFIX}
+    hostname: ${PREFIX}sails${SUFFIX}
     build:
       context: .
       dockerfile: ./sails/Dockerfile
@@ -137,8 +137,8 @@ services:
       - /home/${MYUSER}/sails:/server
 
   postgres:
-    container_name: postgres
-    hostname: postgres
+    container_name: ${PREFIX}postgres${SUFFIX}
+    hostname: ${PREFIX}postgres${SUFFIX}
     image: postgres:10.1
     networks:
       linkt_net:
@@ -150,8 +150,8 @@ services:
 #      - ../${VOLUME}/postgres:/var/lib/postgresql/data
 
   sonarqube:
-    container_name: sonarqube
-    hostname: sonarqube
+    container_name: ${PREFIX}sonarqube${SUFFIX}
+    hostname: ${PREFIX}sonarqube${SUFFIX}
     #image: sonarqube:6.7.2
     build:
       context: .
