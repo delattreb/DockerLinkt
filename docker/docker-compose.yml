@@ -181,3 +181,17 @@ services:
     ports:
       - "25:25"
       - "85:80"
+
+  grafana:
+    container_name: ${PREFIX}grafana${SUFFIX}
+    hostname: ${PREFIX}grafana${SUFFIX}
+    build:
+      context: .
+      dockerfile: ./grafana/Dockerfile
+    networks:
+      linkt_net:
+        ipv4_address: ${IP_GRAFANA}
+    ports:
+      - "3000:3000"
+
+
