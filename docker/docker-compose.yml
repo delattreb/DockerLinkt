@@ -146,8 +146,6 @@ services:
     environment:
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
-#    volumes:
-#      - ../${VOLUME}/postgres:/var/lib/postgresql/data
 
   sonarqube:
     container_name: ${PREFIX}sonarqube${SUFFIX}
@@ -197,12 +195,16 @@ services:
   mssql:
     container_name: ${PREFIX}mssql${SUFFIX}
     hostname: ${PREFIX}mssql${SUFFIX}
-    build:
-      context: .
-      dockerfile: ./mssql/Dockerfile
+    image: microsoft/mssql-server-linux:2017-latest
+#    build:
+#      context: .
+#      dockerfile: ./mssql/Dockerfile
     networks:
       linkt_net:
         ipv4_address: ${IP_MSSQL}
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${MSSQLPASSWORD}
     ports:
       - "1433:1433"
 
