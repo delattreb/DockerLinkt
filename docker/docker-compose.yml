@@ -11,22 +11,6 @@ networks:
         - subnet: ${IP_NETWORK}
 
 services:
-#  dockerlinkt:
-#    build: .
-#    image: delattreb/dockerlinkt  
-
-  swagger_editor:
-    container_name: ${PREFIX}swagger_editor${SUFFIX}
-    hostname: ${PREFIX}swagger_editor${SUFFIX}
-    networks:
-      linkt_net:
-        ipv4_address: ${IP_SWAGGEREDITOR}
-    build:
-      context: .
-      dockerfile: ./swagger_editor/Dockerfile
-    ports:
-      - "5001:8080"
-
   swagger_ui:
     container_name: ${PREFIX}swagger_ui${SUFFIX}
     hostname: ${PREFIX}swagger_ui${SUFFIX}
