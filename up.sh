@@ -7,6 +7,9 @@ echo "Start PHP"
 ./php.sh
 docker stop sonarqube
 docker stop mssql
+docker stop postgres
+
+
 
 
 
