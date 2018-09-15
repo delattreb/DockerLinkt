@@ -20,7 +20,7 @@ RUN apt-get -y install git
 RUN apt-get -y install composer
 
 # Install Curl
-RUn apt-get -y install curl
+RUN apt-get -y install curl
 
 # Upgrade to Node 8
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
