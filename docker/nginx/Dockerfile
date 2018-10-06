@@ -42,9 +42,8 @@ RUN useradd -G www-data ${MYUSER}
 # Copy Nginx config file
 COPY nginx/default.conf /etc/nginx/sites-available/default
 
-# Changer directory permission Storage
-#RUN chgrp -R www-data storage bootstrap/cache
-#RUN chmod -R ug+rwx storage bootstrap/cache
+# Copy right bash
+COPY nginx/right.sh /var/www
 
 # Expose port
 EXPOSE 80 443
