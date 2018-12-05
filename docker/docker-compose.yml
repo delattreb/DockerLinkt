@@ -4,7 +4,7 @@ volumes:
   portainer_data:
 
 networks:
-  linkt_net:
+  linkt_network:
     ipam:
       driver: default
       config:
@@ -16,10 +16,42 @@ services:
     hostname: portainer
     image: portainer/portainer
     networks:
-      linkt_net:
+      linkt_network:
         ipv4_address: ${IP_PORTAINER}
     ports:
       - "9000:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  mariadb:
+    container_name: ${PREFIX}mariadb${SUFFIX}
+    hostname : ${PREFIX}mariadb${SUFFIX}
+    image: mariadb:latest
+    networks:
+      linkt_network:
+        ipv4_address: ${IP_DB}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ../${VOLUME}/mariadb:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: ${PREFIX}phpmyadmin${SUFFIX}
+    hostname : ${PREFIX}phpmyadmin${SUFFIX}
+    image: phpmyadmin/phpmyadmin
+    networks:
+      linkt_network:
+        ipv4_address: ${IP_PHP_MYADMIN}
+    environment:
+      MYSQL_USERNAME: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
+    restart: always
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
+    volumes:
+      - "/sessions"
+    links:
+      - "mariadb:db"

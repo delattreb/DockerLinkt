@@ -4,11 +4,9 @@ volumes:
   portainer_data:
 
 networks:
-  linkt_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: ${IP_NETWORK}
+  linkt_network:
+    external:
+      name: docker_linkt_network
 
 services:
   nginx:
@@ -19,7 +17,7 @@ services:
       - "${HTTPS}:443"
       - "${SOCKET}:${SOCKET}"
     networks:
-      linkt_net:
+      linkt_network:
         ipv4_address: ${IP_NGINX}
     build:
       context: .
@@ -28,39 +26,7 @@ services:
         - MYUSER=${MYUSER}
     volumes:
       - /home/${MYUSER}/${PROJECT}:/var/www
-      - ../${VOLUME}/nginx:/var/log/nginx
-
-  mariadb:
-    container_name: ${PREFIX}mariadb${SUFFIX}
-    hostname : ${PREFIX}mariadb${SUFFIX}
-    image: mariadb:latest
-    networks:
-      linkt_net:
-        ipv4_address: ${IP_DB}
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
-    ports:
-      - "${MYSQL_PORT}:3306"
-    volumes:
-      - ../${VOLUME}/mariadb:/var/lib/mysql
-
-  phpmyadmin:
-    container_name: ${PREFIX}phpmyadmin${SUFFIX}
-    hostname : ${PREFIX}phpmyadmin${SUFFIX}
-    image: phpmyadmin/phpmyadmin
-    networks:
-      linkt_net:
-        ipv4_address: ${IP_PHP_MYADMIN}
-    environment:
-      MYSQL_USERNAME: ${MYSQL_USER}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
-    restart: always
-    ports:
-      - "${PHPMYADMIN_PORT}:80"
-    volumes:
-      - "/sessions"
-    links:
-      - "mariadb:db"
+      - ../${VOLUME}/${PROJECT}/nginx:/var/log/nginx
 
   sails_dev:
     container_name: ${PREFIX}sails${SUFFIX}
@@ -72,7 +38,7 @@ services:
         - SAILS_VERSION=${SAILS_VERSION}
         - NODE_VERSION=${NODE_VERSION}
     networks:
-      linkt_net:
+      linkt_network:
         ipv4_address: ${IP_SAILS}
     ports:
       - "${SAILS_PORT}:1337"
@@ -88,7 +54,7 @@ services:
       context: .
       dockerfile: ./maildev/Dockerfile
     networks:
-      linkt_net:
+      linkt_network:
         ipv4_address: ${IP_MAILDEV}
     ports:
       - "${SMTP}:25"
