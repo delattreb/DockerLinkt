@@ -55,3 +55,18 @@ services:
       - "/sessions"
     links:
       - "mariadb:db"
+
+  maildev:
+    container_name: ${PREFIX}maildev${SUFFIX}
+    hostname: ${PREFIX}maildev${SUFFIX}
+    build:
+      context: .
+      dockerfile: ./maildev/Dockerfile
+    networks:
+      linkt_network:
+        ipv4_address: ${IP_MAILDEV}
+    ports:
+      - "${SMTP}:25"
+      - "${WEBUI}:80"
+
+

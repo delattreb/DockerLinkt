@@ -28,3 +28,21 @@ services:
       - /home/${MYUSER}/${PROJECT}:/var/www
       - ../${VOLUME}/${PROJECT}/nginx:/var/log/nginx
 
+  sails_dev:
+    container_name: ${PREFIX}sails${SUFFIX}
+    hostname: ${PREFIX}sails${SUFFIX}
+    build:
+      context: .
+      dockerfile: ./sails/Dockerfile
+      args:
+        - SAILS_VERSION=${SAILS_VERSION}
+        - NODE_VERSION=${NODE_VERSION}
+    networks:
+      linkt_network:
+        ipv4_address: ${IP_SAILS}
+    ports:
+      - "${SAILS_PORT}:1337"
+    environment:
+      - NODE_ENV=dev
+    volumes:
+      - /home/${MYUSER}/sails:/server
