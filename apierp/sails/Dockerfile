@@ -6,6 +6,8 @@ RUN apt-get -y install git
 ARG SAILS_VERSION=${SAILS_VERSION}
 RUN npm install -g sails@~${SAILS_VERSION} grunt-cli grunt bower nodejs pm2 npm-check-updates
 
+RUN apt-get -y install git
+
 RUN mkdir /server
 VOLUME ["/server"]
 WORKDIR /server
